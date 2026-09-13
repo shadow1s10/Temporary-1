@@ -1177,6 +1177,95 @@
             border-radius: 12px; background: #fff; display: block;
         }
 
+
+        /* ===== COMPACT LANDING (tool-first) ===== */
+        .header { height: auto; }
+        .nav { height: 56px; }
+        .logo { font-size: 1.15rem; gap: 0.5rem; }
+        .logo-icon { width: 32px; height: 32px; font-size: 0.9rem; border-radius: 0.55rem; }
+        .nav-links { gap: 1.5rem; }
+        .nav-links a { font-size: 0.8rem; }
+
+        .hero {
+            padding: 80px 0 48px !important;
+        }
+        .hero-badge {
+            font-size: 0.7rem !important;
+            padding: 0.35rem 0.9rem !important;
+            margin-bottom: 0.85rem !important;
+        }
+        .hero-title {
+            font-size: 1.65rem !important;
+            line-height: 1.35 !important;
+            margin-bottom: 0.6rem !important;
+        }
+        .hero-title br { display: none; }
+        .hero-desc {
+            font-size: 0.875rem !important;
+            max-width: 420px !important;
+            margin: 0 auto 0 !important;
+            line-height: 1.55 !important;
+        }
+        .hero-stats { display: none !important; }
+
+        .tool-section {
+            margin-top: -36px !important;
+            padding-bottom: 48px !important;
+        }
+        .tool-wrapper { max-width: 520px !important; }
+        .tool-header { padding: 1rem 1.25rem !important; }
+        .tool-header h3 { font-size: 0.95rem !important; }
+        .tool-body { padding: 1.15rem !important; }
+
+        .section-title { font-size: 1.35rem !important; margin-bottom: 0.5rem !important; }
+        .section-subtitle { font-size: 0.85rem !important; margin-bottom: 1.75rem !important; }
+
+        .features { padding: 56px 0 !important; }
+        .feature-card { padding: 1.25rem !important; }
+        .feature-icon { width: 44px; height: 44px; font-size: 1.15rem; margin-bottom: 0.85rem; }
+        .feature-card h3 { font-size: 0.95rem !important; margin-bottom: 0.45rem !important; }
+        .feature-card p { font-size: 0.8rem !important; }
+
+        .how-it-works { padding: 56px 0 !important; }
+        .step-num { width: 56px; height: 56px; font-size: 1.25rem; margin-bottom: 1rem; }
+        .step h3 { font-size: 0.95rem !important; }
+        .step p { font-size: 0.8rem !important; }
+        .steps { margin-top: 1.75rem !important; gap: 1.25rem !important; }
+
+        .faq { padding: 56px 0 !important; }
+        .faq-question { font-size: 0.9rem !important; padding: 1rem 1.15rem !important; }
+        .faq-answer-inner { font-size: 0.82rem !important; padding: 0 1.15rem 1rem !important; }
+
+        .seo-content { padding: 56px 0 !important; }
+        .seo-text h2 { font-size: 1.35rem !important; }
+        .seo-text p { font-size: 0.85rem !important; }
+        .seo-list li { font-size: 0.82rem !important; margin-bottom: 0.55rem !important; }
+        .seo-grid { gap: 2rem !important; }
+
+        .blog-preview { padding: 56px 0 !important; }
+        .blog-image { height: 140px !important; font-size: 2rem !important; }
+        .blog-content { padding: 1.1rem !important; }
+        .blog-card h3 { font-size: 0.95rem !important; }
+        .blog-card p { font-size: 0.8rem !important; }
+
+        .cta { padding: 56px 0 !important; }
+        .cta h2 { font-size: 1.5rem !important; }
+        .cta p { font-size: 0.9rem !important; margin-bottom: 1.25rem !important; }
+
+        .footer { padding: 40px 0 24px !important; }
+        .footer-grid { gap: 1.5rem !important; margin-bottom: 1.5rem !important; }
+        .footer-brand p, .footer-links a { font-size: 0.8rem !important; }
+        .footer-title { font-size: 0.75rem !important; margin-bottom: 0.85rem !important; }
+        .footer-copyright { font-size: 0.75rem !important; }
+
+        .mobile-menu { top: 56px; padding: 1.25rem; gap: 0.75rem; }
+        .mobile-menu a { font-size: 1rem; padding: 0.55rem; }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.4rem !important; }
+            .hero { padding: 72px 0 40px !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -1197,7 +1286,6 @@
                 <li><a href="#blog">المقالات</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="#tool" class="btn btn-primary">استخدم الأداة</a>
                 <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="القائمة">
                     <i class="fas fa-bars" id="menuIcon"></i>
                 </button>
@@ -1213,7 +1301,7 @@
     <a href="#how-it-works" onclick="toggleMenu()">كيف يعمل</a>
     <a href="#faq" onclick="toggleMenu()">الأسئلة الشائعة</a>
     <a href="#blog" onclick="toggleMenu()">المقالات</a>
-    <a href="#tool" class="btn btn-primary" onclick="toggleMenu()" style="margin-top: 1rem;">استخدم الأداة</a>
+
 </div>
 
 <!-- ===== HERO ===== -->
@@ -1224,29 +1312,14 @@
         <div class="hero-content">
             <div class="hero-badge animate">
                 <i class="fas fa-bolt"></i>
-                بريد مؤقت فوري بدون تسجيل
+                بريد مؤقت فوري
             </div>
             <h1 class="hero-title animate delay-1">
-                بريدك المؤقت <span>بسرعة البرق</span><br>
-                وحماية تامة
+                بريد مؤقت <span>سريع وآمن</span>
             </h1>
             <p class="hero-desc animate delay-2">
-                احصل على عنوان بريد إلكتروني مؤقت في ثوانٍ. استلم رسائل التفعيل والتأكيد بدون مشاركة بريدك الشخصي. حماية كاملة من السبام والتتبع.
+                عنوان جاهز فورًا لاستلام رسائل التفعيل — بدون تسجيل.
             </p>
-            <div class="hero-stats animate delay-3">
-                <div class="stat-item">
-                    <div class="stat-num">10K+</div>
-                    <div class="stat-label">بريد يومي</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num">99.9%</div>
-                    <div class="stat-label">وقت التشغيل</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num">0 ث</div>
-                    <div class="stat-label">وقت الانتظار</div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
