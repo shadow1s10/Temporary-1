@@ -1913,16 +1913,131 @@
 
 <!-- ============================================================
      ========== START OF EMAIL TOOL PACKAGE — JS ==========
-     ============================================================
-     هذا الجزء الخاص بمنطق الأداة والمزود (API).
-     لو هتغير المزود انسخ السكربت كله من هنا
-     لحد END OF EMAIL TOOL PACKAGE — JS
      ============================================================ -->
 <script>
-/* ===== Shadow Mail Tool — mail123.fr ===== */
+/* ===== Shadow Mail Tool ===== */
 (function () {
     'use strict';
-    const API = 'https://mail123.fr/api/v1';
+
+    /* ============================================================
+       ========== START PROVIDER (غيّر المزود من هنا فقط) ==========
+       ============================================================
+       
+       ★★★ اقرأ ده قبل ما تعدّل ★★★
+       
+       - الجزء ده بس اللي بتغيّره لما تبدّل مزود الإيميلات.
+       - انسخ من START PROVIDER لحد END PROVIDER وابعته لأي ذكاء اصطناعي.
+       - قول للذكاء الاصطناعي: "غيّر المزود لمزود X وخلي الدوال ترجع بنفس الشكل".
+       
+       الدوال المطلوبة (3 فقط):
+       1) providerCreateMailbox  → ترجع string (عنوان الإيميل)
+       2) providerGetMessages    → ترجع array من الرسائل
+       3) providerGetMessage     → ترجع object رسالة واحدة
+       
+       شكل الرسالة المطلوب:
+       {
+         id: "...",           // معرف الرسالة (مطلوب)
+         from: "...",         // المرسل كنص (مطلوب)
+         subject: "...",      // الموضوع
+         date: "...",         // التاريخ
+         otp_code: "...",     // رمز التحقق إن وجد (اختياري)
+         html: "...",         // محتوى HTML (اختياري)
+         text: "..."          // محتوى نصي (اختياري)
+       }
+       
+       ⚠ مهم: لا تفتح الملف بالضغط المزدوج (file://).
+          شغّله من سيرفر محلي أو ارفعه على استضافة.
+       
+       المزود الحالي: Guerrilla Mail (مجاني · CORS مفتوح · شغال من المتصفح)
+       ============================================================ */
+
+    const API = 'https://api.guerrillamail.com/ajax.php';
+    const _gmTokens = {}; // تخزين sid_token لكل إيميل
+
+    // 1) إنشاء بريد جديد — يرجع عنوان الإيميل كـ string
+    async function providerCreateMailbox(retries) {
+        retries = retries || 3;
+        for (let i = 1; i <= retries; i++) {
+            try {
+                const res = await fetch(
+                    API + '?f=get_email_address&ip=127.0.0.1&agent=Mozilla_' + Date.now(),
+                    { headers: { 'Accept': 'application/json' } }
+                );
+                if (res.status === 429) {
+                    await new Promise(r => setTimeout(r, 1500 * i));
+                    continue;
+                }
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                if (!data.email_addr || !data.sid_token) throw new Error('bad response');
+                _gmTokens[data.email_addr] = data.sid_token;
+                return data.email_addr;
+            } catch (e) {
+                console.error('providerCreateMailbox:', e);
+                if (i >= retries) throw e;
+                await new Promise(r => setTimeout(r, 1000 * i));
+            }
+        }
+        throw new Error('fail');
+    }
+
+    // 2) جلب قائمة الرسائل — يرجع array بالشكل المطلوب
+    async function providerGetMessages(emailAddr) {
+        const sid = _gmTokens[emailAddr];
+        if (!sid) throw new Error('no token');
+
+        const res = await fetch(
+            API + '?f=get_email_list&offset=0&sid_token=' + encodeURIComponent(sid),
+            { headers: { 'Accept': 'application/json' } }
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const list = data.list || [];
+
+        return list.map(function (m) {
+            return {
+                id: String(m.mail_id),
+                from: m.mail_from || 'Unknown',
+                subject: m.mail_subject || '(بدون موضوع)',
+                date: m.mail_date || '',
+                otp_code: null,
+                html: null,
+                text: m.mail_excerpt || ''
+            };
+        });
+    }
+
+    // 3) جلب رسالة واحدة — يرجع object الرسالة
+    async function providerGetMessage(emailAddr, msgId) {
+        const sid = _gmTokens[emailAddr];
+        if (!sid) throw new Error('no token');
+
+        const res = await fetch(
+            API + '?f=fetch_email&email_id=' + encodeURIComponent(msgId) +
+            '&sid_token=' + encodeURIComponent(sid),
+            { headers: { 'Accept': 'application/json' } }
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const m = await res.json();
+
+        const body = m.mail_body || '';
+        const otpMatch = String(body).match(/\b(\d{4,8})\b/);
+
+        return {
+            id: String(m.mail_id || msgId),
+            from: m.mail_from || 'Unknown',
+            subject: m.mail_subject || '(بدون موضوع)',
+            date: m.mail_date || '',
+            otp_code: otpMatch ? otpMatch[1] : null,
+            html: body,
+            text: body.replace(/<[^>]+>/g, ' ').trim()
+        };
+    }
+
+    /* ============================================================
+       ========== END PROVIDER ==========
+       ============================================================ */
+
     const CIRC = 389.6;
     const LIFE = 5 * 60 * 1000;
     const POLL = 5000;
@@ -1982,24 +2097,6 @@
         renderHist();
     }
 
-    async function createBox(retries) {
-        retries = retries || 3;
-        for (let i = 1; i <= retries; i++) {
-            try {
-                const res = await fetch(API + '/mailbox/new', { headers: { 'Accept': 'application/json' } });
-                if (res.status === 429) { await new Promise(r => setTimeout(r, 1500 * i)); continue; }
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
-                if (!data.success || !data.address) throw new Error('bad response');
-                return data.address;
-            } catch (e) {
-                if (i >= retries) throw e;
-                await new Promise(r => setTimeout(r, 1000 * i));
-            }
-        }
-        throw new Error('fail');
-    }
-
     window.tmGenerate = async function (force) {
         if (creating) return;
         if (!force && email && expireAt > Date.now()) return;
@@ -2008,7 +2105,7 @@
         $('tmEmail').value = 'جاري التوليد...';
         $('tmCopyBtn').disabled = true;
         try {
-            const addr = await createBox(3);
+            const addr = await providerCreateMailbox(3);
             save(addr);
             expireAt = Date.now() + LIFE;
             sSet('tm_e', String(expireAt));
@@ -2051,12 +2148,7 @@
         const icon = $('tmRefreshIcon');
         if (manual && icon) icon.classList.add('fa-spin');
         try {
-            const res = await fetch(API + '/mailbox/' + encodeURIComponent(email) + '/messages', {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const data = await res.json();
-            const messages = data.messages || [];
+            const messages = await providerGetMessages(email);
             if (!messages.length) renderEmpty();
             else renderMsgs(messages);
             if (manual) status('تم التحديث • ' + messages.length + ' رسالة');
@@ -2100,12 +2192,7 @@
     window.tmOpenMessage = async function (id) {
         if (!email || !id) return;
         try {
-            const res = await fetch(API + '/mailbox/' + encodeURIComponent(email) + '/messages/' + encodeURIComponent(id), {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const data = await res.json();
-            const msg = data.message || data;
+            const msg = await providerGetMessage(email, id);
             $('tmModalFrom').textContent = 'من: ' + (msg.from || '—');
             $('tmModalSubject').textContent = msg.subject || '(بدون موضوع)';
 
