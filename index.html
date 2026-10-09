@@ -135,7 +135,7 @@
       
       
 /* ========== HEADER (Fixed & Responsive) ========== */
-.header {
+.HEADER {
     position: fixed;
     top: 0;
     left: 0;
@@ -227,7 +227,7 @@
     flex-shrink: 0;
 }
 
-/* Mobile Header */
+/* Mobile HEADER */
 @media (max-width: 768px) {
     .nav {
         height: 64px;
@@ -384,14 +384,14 @@
             overflow: hidden;
         }
 
-        .tool-header {
+        .tool-HEADER {
             background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
             padding: 1.5rem;
             text-align: center;
             color: white;
         }
 
-        .tool-header h3 {
+        .tool-HEADER h3 {
             font-size: 1.125rem;
             font-weight: 700;
             display: flex;
@@ -400,7 +400,7 @@
             gap: 0.5rem;
         }
 
-        .tool-header h3 i {
+        .tool-HEADER h3 i {
             color: var(--accent);
         }
 
@@ -1264,7 +1264,7 @@
 <body>
 
 <!-- ===== HEADER ===== -->
-<header class="header" id="header">
+<HEADER class="header" id="header">
     <div class="container">
         <nav class="nav">
             <a href="index.html" class="logo">
@@ -1280,12 +1280,12 @@
                 <li><a href="#faq">الأسئلة الشائعة</a></li>
                 <li><a href="blog.html">المدونة</a></li>
             </ul>
-            <a href="#tool" class="btn btn-primary">استخدم الأداة</a>
-            <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="القائمة">
-                <i class="fas fa-bars" id="menuIcon"></i>
-            </button>
-        </nav>
-    </div>
+    <a href="#tool" class="btn btn-primary" style="padding: 0.4rem 0.9rem; font-size: 0.85rem;">استخدم الأداة</a>
+    <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="القائمة" style="font-size: 1rem; padding: 0.25rem;">
+        <i class="fas fa-bars" id="menuIcon"></i>
+    </button>
+</nav>
+</div>
 </header>
 
 <!-- Mobile Menu -->
@@ -1866,7 +1866,7 @@
 </footer>
 
 <script>
-    // Header scroll effect
+    // HEADER scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
     });
