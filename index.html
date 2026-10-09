@@ -753,86 +753,85 @@
         }
 
         /* ===== BLOG PREVIEW ===== */
-        .blog-preview {
-            padding: 100px 0;
-            background: white;
-        }
+.blog-preview {
+    padding: 100px 0;
+    background: white;
+}
 
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
 
-        .blog-card {
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 1px solid var(--gray-light);
-            transition: all 0.3s ease;
-            background: white;
-        }
+.blog-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--gray-light);
+    transition: all 0.3s ease;
+    background: white;
+}
 
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-            border-color: transparent;
-        }
+.blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: transparent;
+}
 
-        .blog-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
+/* تعديل حاوية الصورة لتأخذ نسبة 16:9 تماماً */
+.blog-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    background: #0f172a;
+}
 
-        .blog-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
-        }
+/* تنسيق الصورة لتظهر بالكامل وبشكل متناسق */
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
-        .blog-content {
-            padding: 1.5rem;
-        }
+.blog-content {
+    padding: 1.5rem;
+}
 
-        .blog-tag {
-            display: inline-block;
-            background: #dbeafe;
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
+.blog-tag {
+    display: inline-block;
+    background: #dbeafe;
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
 
-        .blog-card h3 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-        }
+.blog-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
 
-        .blog-card p {
-            color: var(--gray);
-            font-size: 0.875rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
+.blog-card p {
+    color: var(--gray);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
 
-        .blog-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--gray);
-            font-size: 0.8rem;
-        }
+.blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--gray);
+    font-size: 0.8rem;
+}
 
         /* ===== CTA ===== */
         .cta {
@@ -1692,7 +1691,7 @@
     </div>
 </section>
 
-<!-- ===== BLOG PREVIEW ===== -->
+<!-- =====  ===== -->
 <section class="blog-preview" id="blog">
     <div class="container">
         <h2 class="section-title">أحدث <span class="text-gradient">المقالات</span></h2>
