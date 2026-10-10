@@ -135,7 +135,7 @@
       
       
 /* ========== HEADER (Fixed & Responsive) ========== */
-.HEADER {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -227,48 +227,49 @@
     flex-shrink: 0;
 }
 
-/* Mobile HEADER */
+/* Mobile Header */
 @media (max-width: 768px) {
-    .nav {
-        height: 64px;
-        min-height: 64px;
-        padding: 0 1rem;
-    }
+    .nav {
+        height: 64px;
+        min-height: 64px;
+        padding: 0 1rem;
+    }
 
-    .nav-links {
-        display: none;
-    }
+    .nav-links {
+        display: none;
+    }
 
-    .mobile-menu-btn {
-        display: block;
-    }
+    .mobile-menu-btn {
+        display: block;
+    }
 
-    .logo-img {
-        width: 40px;
-        height: 40px;
-        border-width: 2px;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25), 0 3px 10px rgba(0, 0, 0, 0.4);
-    }
+    .logo-img {
+        width: 40px;
+        height: 40px;
+        border-width: 2px;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25), 0 3px 10px rgba(0, 0, 0, 0.4);
+    }
 
-    .logo-text {
-        font-size: 1.15rem;
-    }
+    .logo-text {
+        font-size: 1.15rem;
+    }
 
-    .btn-primary {
-        padding: 0.65rem 1.1rem;
-        font-size: 0.8rem;
-    }
+    .btn-primary {
+        padding: 0.65rem 1.1rem;
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 400px) {
-    .logo-text {
-        font-size: 1.05rem;
-    }
-    .logo-img {
-        width: 36px;
-        height: 36px;
-    }
-} 
+    .logo-text {
+        font-size: 1.05rem;
+    }
+    .logo-img {
+        width: 36px;
+        height: 36px;
+    }
+}
+
         /* ===== HERO SECTION ===== */
         .hero {
             position: relative;
@@ -383,14 +384,14 @@
             overflow: hidden;
         }
 
-        .tool-HEADER {
+        .tool-header {
             background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
             padding: 1.5rem;
             text-align: center;
             color: white;
         }
 
-        .tool-HEADER h3 {
+        .tool-header h3 {
             font-size: 1.125rem;
             font-weight: 700;
             display: flex;
@@ -399,7 +400,7 @@
             gap: 0.5rem;
         }
 
-        .tool-HEADER h3 i {
+        .tool-header h3 i {
             color: var(--accent);
         }
 
@@ -751,7 +752,7 @@
             font-size: 1.125rem;
         }
 
-        /* ===== BLOG PREVIEW ===== */
+       /* ===== BLOG PREVIEW ===== */
 .blog-preview {
     padding: 100px 0;
     background: white;
@@ -1690,7 +1691,7 @@
     </div>
 </section>
 
-<!-- =====  ===== -->
+<!-- ===== BLOG PREVIEW ===== -->
 <section class="blog-preview" id="blog">
     <div class="container">
         <h2 class="section-title">أحدث <span class="text-gradient">المقالات</span></h2>
@@ -1856,16 +1857,16 @@
         <div class="footer-bottom">
             <p class="footer-copyright">© 2026 Shadow Mail. جميع الحقوق محفوظة.</p>
             <div class="footer-social">
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://shadow1s10.github.io/shadow1s10/" target="_blank" aria-label="Website"><i class="fas fa-globe"></i></a>
+                <a href="https://tiktok.com/@shadow1s10" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/shadow1s10?psln=dG5zcjU2eXVzYmV6" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-    </div>
+    </div>                     
 </footer>
 
 <script>
-    // HEADER scroll effect
+    // Header scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
     });
